@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Link from 'next/link';
+
 function Buttomm() {
   return (
       <button style={{backgroundColor:"blue",border:"none",borderRadius:'4px',margin:"1rem",width:"20%",height:"3rem"}}>register</button>
@@ -20,7 +20,6 @@ export default function Home() {
           margin:"1rem",borderRadius:'10px',width:"100%",height:"70px",color:"black"
         }}/>
         <Buttomm />
-        <Link href={"/review"}>sdsds</Link>
       </form>
     </main>
   )

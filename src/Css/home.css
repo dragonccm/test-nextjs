@@ -1,0 +1,278 @@
+/* item */
+/* item */
+html {
+    background-color: #4e4949;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", "Arial", sans-serif;
+}
+
+body {
+    background-color: #4e4949;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", "Arial", sans-serif;
+}
+
+#profile_menu {
+    width: 200px;
+    height: 200px;
+    display: none;
+    right: 0;
+    margin-top: 40px;
+    background-color: aliceblue;
+    z-index: 1;
+}
+
+.avt {
+    font-size: 30px;
+}
+
+.avt:hover+#profile_menu {
+    display: block;
+}
+
+li {
+    list-style: none;
+}
+
+header {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 50px;
+    margin: 0;
+    background-color: #5ab2ff;
+}
+
+.search {
+    height: 25px;
+    width: 550px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(56, 52, 52, 0.512);
+}
+
+.btn {
+    border: none;
+    background-color: transparent;
+}
+
+.header_btn_gr {
+    font-size: 30px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left_gr {
+    padding: 0;
+    width: 7%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.element_container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding-top: 5px;
+    justify-content: center;
+}
+
+.novel_item {
+    width: 15%;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: white;
+    margin: 17px 10px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.novel_item:hover {
+    padding-top: 2px;
+}
+
+.novel_item img {
+    width: 100%;
+    height: 260px;
+    border-radius: 10px;
+}
+
+.novel_title {
+    color: black;
+    margin: 10px 0;
+    font-size: 15px;
+}
+
+.novel_name {
+    height: 36px;
+    font-size: 16px;
+    color: black;
+    text-transform: capitalize;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 20px;
+}
+
+.novel_name:hover {
+    text-decoration: underline;
+}
+
+.novel_author {
+    margin-top: 10px;
+}
+
+.novel_author span {
+    color: var(--novel_author);
+}
+
+.novel_author span:hover {
+    text-decoration: underline;
+}
+
+.novel_chapter {
+    display: flex;
+    margin-top: 10px;
+}
+
+.novel_chapter span {
+    padding: 0 10px;
+    border-right: 1px solid #a2a2a2;
+}
+
+.novel_chapter div {
+    margin-left: 10px;
+    color: #ab1010;
+    font-weight: 700;
+}
+
+.pagination ul {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    background: #fff;
+    padding: 8px;
+    border-radius: 50px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pagination ul li {
+    color: #20B2AA;
+    list-style: none;
+    line-height: 45px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+}
+
+.pagination ul li:first-child:hover {
+    color: #fff;
+    background: #20B2AA;
+}
+
+.pagination ul li:last-child:hover {
+    color: #fff;
+    background: #20B2AA;
+}
+
+.pagination ul li.numb {
+    list-style: none;
+    height: 45px;
+    width: 45px;
+    margin: 0 3px;
+    line-height: 45px;
+    border-radius: 50%;
+}
+
+.pagination ul li.numb:hover {
+    color: #fff;
+    background: #20B2AA;
+}
+
+.pagination ul li.numb.first {
+    margin: 0px 3px 0 -5px;
+}
+
+.pagination ul li.numb.last {
+    margin: 0px -5px 0 3px;
+}
+
+.pagination ul li.dots {
+    font-size: 22px;
+    cursor: default;
+}
+
+.pagination ul li.btn {
+    padding: 0 20px;
+    border-radius: 50px;
+}
+
+.pagination li.active {
+    color: #fff;
+    background: #20B2AA;
+}
+
+.footer_wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 5px solid #403d3d;
+    background-color: #5ab2ff;
+}
+
+#footer_wrap_main_title {
+    color: var(--header-text);
+}
+
+#footer_wrap_main_title a {
+    color: black;
+}
+
+.footer_wrap_contact_item {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.footer_wrap_contact_item i {
+    color: #5ab2ff;
+    font-size: 25px;
+}
+
+.footer_wrap_logo {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.footer_wrap_logo img {
+    width: 100px;
+}
+
+.footer_wrap_main {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+}
+
+.footer_wrap_contact {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
