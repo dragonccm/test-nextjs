@@ -19,7 +19,7 @@ async function page(){
                 complete profile with threads 
             </p>
             <section className="mt-9 bg-dark-2 p-10">
-                <AccountProfile user={userData}/>
+                <AccountProfile user={userData} btnTitle="continue"/>
             </section>
         </main>
     )
