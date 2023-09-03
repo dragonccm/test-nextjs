@@ -23,7 +23,7 @@ interface Props {
     user: {
         id: string;
         objectId: string;
-        usernames: string;
+        username: string;
         name: string;
         bio: string;
         image: string;
@@ -34,10 +34,10 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
     const form = useForm({
         resolver: zodResolver(UserValidation),
         defaultValues: {
-            profile_photo: '',
-            name: '',
-            username: '',
-            bio: '',
+            profile_photo: user?.image|| "",
+            name: user?.name|| "",
+            username: user?.username|| "",
+            bio: user?.bio|| "",
         }
 
     });
