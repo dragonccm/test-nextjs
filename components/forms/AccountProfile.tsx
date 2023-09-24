@@ -19,7 +19,10 @@ import { Input } from "@/components/ui/input"
 import { z } from "zod";
 import { Textarea } from "../ui/textarea";
 import { isBase64Image } from "@/lib/utils";
-import { useUploadThing} from "@/lib/uploadthing"
+import { useUploadThing } from "@/lib/uploadthing"
+import { updateUser } from "@/lib/actions/user.actions";
+import path from "path";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
     user: {
@@ -33,8 +36,9 @@ interface Props {
     btnTitle: string;
 }
 const AccountProfile = ({ user, btnTitle }: Props) => {
+
     const [files, setFiles] = useState<File[]>([]);
-    const {startUpload} = useUploadThing("media");
+    const { startUpload } = useUploadThing("media");
     const form = useForm({
         resolver: zodResolver(UserValidation),
         defaultValues: {
@@ -45,6 +49,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         }
 
     });
+    const router = useRouter();
+    const pathname = usePathname();
     const handleImage = (
         e: ChangeEvent<HTMLInputElement>,
         fieldChange: (value: string) => void
@@ -69,18 +75,25 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
     };
     const onSubmit = async (values: z.infer<typeof UserValidation>) => {
         const blob = values.profile_photo;
-    
+
         const hasImageChanged = isBase64Image(blob);
         if (hasImageChanged) {
-          const imgRes = await startUpload(files);
-    
-          if (imgRes && imgRes[0].fileUrl) {
-            values.profile_photo = imgRes[0].fileUrl;
-          }
-        }
-    
+            const imgRes = await startUpload(files);
 
-        // todo: upload user profile
+            if (imgRes && imgRes[0].fileUrl) {
+                values.profile_photo = imgRes[0].fileUrl;
+            }
+        }
+
+
+        await updateUser({
+            userId: values.username,
+            username: values.name,
+            name: values.bio,
+            bio: values.profile_photo,
+            image: user.id,
+            path: pathname
+        });
     }
     return (
         <Form {...form}>
