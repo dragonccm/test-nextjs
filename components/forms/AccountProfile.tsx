@@ -94,6 +94,13 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             image: user.id,
             path: pathname
         });
+
+        if(pathname==="/profile/edit"){
+            router.back
+        }
+        else{
+            router.push('/')
+        }
     }
     return (
         <Form {...form}>
