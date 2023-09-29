@@ -51,6 +51,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
     });
     const router = useRouter();
     const pathname = usePathname();
+
     const handleImage = (
         e: ChangeEvent<HTMLInputElement>,
         fieldChange: (value: string) => void
@@ -139,6 +140,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                                     onChange={(e) => handleImage(e, field.onChange)}
                                 />
                             </FormControl>
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
