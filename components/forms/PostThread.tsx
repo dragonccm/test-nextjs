@@ -15,11 +15,12 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { Textarea } from "../ui/textarea";  
+import { Textarea } from "../ui/textarea";
 import { updateUser } from "@/lib/actions/user.actions";
 import path from "path";
 import { usePathname, useRouter } from "next/navigation";
 import { ThreadValidation } from "@/lib/validation/thread";
+import createThread from "@/lib/actions/thread.action";
 
 interface Props {
     user: {
@@ -35,28 +36,34 @@ interface Props {
 
 
 
-function PostThread({userId}: {userId: string}) {
+function PostThread({ userId }: { userId: string }) {
     const form = useForm({
         resolver: zodResolver(ThreadValidation),
         defaultValues: {
-           thread:'',
+            thread: '',
             accountId: userId,
         }
-    
+
     });
 
+    const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+        await createThread({
+          text: values.thread,
+          author: userId,
+          communityId: null,
+          path: pathname,
+        });
+    
+        router.push("/");
+      };
     const router = useRouter();
     const pathname = usePathname();
 
-    const onSubmit=()=>{
-
-    }
-
-    return(
+    return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-start gap-10">   
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-start gap-10">
 
-            <FormField
+                <FormField
                     control={form.control}
                     name='thread'
                     render={({ field }) => (
@@ -64,10 +71,10 @@ function PostThread({userId}: {userId: string}) {
                             <FormLabel className='text-base-semibold text-light-2'>
                                 Content
                             </FormLabel>
-                            <FormControl    className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
+                            <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
                                 <Textarea
                                     rows={15}
-                                    
+
                                     {...field}
                                 />
                             </FormControl>
