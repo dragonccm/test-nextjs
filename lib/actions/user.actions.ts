@@ -4,6 +4,19 @@ import User from "../models/user.model";
 import { connectToDB } from "../validation/mongoose";
 import { revalidatePath } from "next/cache"
 
+
+export async function fetchUser(userId: string) {
+  try {
+    connectToDB();
+    return await User.findOne({ id: userId })
+    // .populate({
+    //   path:'communities',
+    //   model: community
+    // });
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
 interface Params {
   userId: string;
   username: string;
@@ -26,7 +39,7 @@ export async function updateUser({
     await User.findOneAndUpdate(
       { id: userId },
       {
-        username: username.toLowerCase(),
+        username,
         name,
         bio,
         image,
@@ -41,19 +54,4 @@ export async function updateUser({
   } catch (error: any) {
     throw new Error(`Failed to create/update user: ${error.message}`);
   }
-}
-
-export async function fetchUser(userId: string){
-  
-  try {
-    connectToDB();
-    return await User.findOne({id: userId})
-    // .populate({
-    //   path:'communities',
-    //   model: community
-    // });
-  } catch (error: any) {
-    throw new Error(`Failed to fetch user: ${error.message}`);
-  }
-
 }
