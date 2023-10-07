@@ -20,7 +20,8 @@ import { updateUser } from "@/lib/actions/user.actions";
 import path from "path";
 import { usePathname, useRouter } from "next/navigation";
 import { ThreadValidation } from "@/lib/validation/thread";
-import createThread from "@/lib/actions/thread.action";
+import { createThread } from "@/lib/actions/thread.action";
+
 
 interface Props {
     user: {
@@ -37,6 +38,8 @@ interface Props {
 
 
 function PostThread({ userId }: { userId: string }) {
+    const router = useRouter();
+    const pathname = usePathname();
     const form = useForm({
         resolver: zodResolver(ThreadValidation),
         defaultValues: {
@@ -56,8 +59,7 @@ function PostThread({ userId }: { userId: string }) {
     
         router.push("/");
       };
-    const router = useRouter();
-    const pathname = usePathname();
+    
 
     return (
         <Form {...form}>
@@ -82,7 +84,7 @@ function PostThread({ userId }: { userId: string }) {
                         </FormItem>
                     )}
                 />
-
+                <Button type="submit" className="bg-primary-500">Post Thread</Button>
             </form>
         </Form>
 
