@@ -75,8 +75,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         }
     };
     const onSubmit = async (values: z.infer<typeof UserValidation>) => {
-       
-        console.log(`Upload`)
+
+        console.log(values.username)
         const blob = values.profile_photo;
 
         const hasImageChanged = isBase64Image(blob);
@@ -94,11 +94,12 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             userId: user.id,
             bio: values.bio,
             image: values.profile_photo,
-          });
-        if(pathname==="/profile/edit"){
+        });
+
+        if (pathname === "/profile/edit") {
             router.back
         }
-        else{
+        else {
             router.push('/')
         }
     }
@@ -139,7 +140,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                                     onChange={(e) => handleImage(e, field.onChange)}
                                 />
                             </FormControl>
-                            <FormMessage/>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
