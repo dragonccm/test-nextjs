@@ -75,6 +75,8 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         }
     };
     const onSubmit = async (values: z.infer<typeof UserValidation>) => {
+       
+        console.log(`Upload`)
         const blob = values.profile_photo;
 
         const hasImageChanged = isBase64Image(blob);
@@ -85,8 +87,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                 values.profile_photo = imgRes[0].fileUrl;
             }
         }
-
-
         await updateUser({
             name: values.name,
             path: pathname,
