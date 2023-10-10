@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import AccountProfile from "@/components/forms/AccountProfile";
+import { json } from "node:stream/consumers";
 
 async function Page() {
   
