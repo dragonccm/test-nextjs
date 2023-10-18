@@ -1,5 +1,6 @@
 "use server"
 
+import Thread from "../models/thread.model";
 import User from "../models/user.model";
 import { connectToDB } from "../validation/mongoose";
 import { revalidatePath } from "next/cache"
@@ -57,5 +58,30 @@ export async function updateUser({
   }
 }
 
+
+export async function fetchUserPosts(userId: string) {
+  try {
+    connectToDB();
+    const threads = await User.findOne({ id: userId }).populate({
+      path: "threads",
+      model: Thread,
+      populate: [
+        {
+          path: "children",
+          model: Thread,
+          populate: {
+            path: "author",
+            model: User,
+            select: "name image id", 
+          },
+        },
+      ],
+    });
+    return threads;
+  } catch (error) {
+    console.error("Error fetching user threads:", error);
+    throw error;
+  }
+}
 // tao trang thai
 // export async function 
