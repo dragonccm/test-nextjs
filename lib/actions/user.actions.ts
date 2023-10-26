@@ -83,5 +83,4 @@ export async function fetchUserPosts(userId: string) {
     throw error;
   }
 }
-// tao trang thai
-// export async function 
+
