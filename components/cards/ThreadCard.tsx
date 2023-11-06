@@ -60,16 +60,16 @@ const ThreadCard = ({
                         </Link>
                         <p className="mt-2 text-small-regular text-light-2">{content}</p>
                         <div className={`${isComment && 'mb-10'} mt-5 flex flex-col gap-3`}>
-                            
-                            {/* <div className="trangbia w-30 h-50 mx-auto bg-gray-100 flex justify-center items-center">
+
+                            <Link href={`/profile/${author.id}`} className="relative h-80 w-96">
                                 <Image
                                     src={author.image}
-                                    alt='heart'
-                                    width={500}
-                                    height={300}
-                                    className="w-full h-full"
-                                />
-                            </div> */}
+                                    alt="profile image"
+                                    fill
+                                    className="cursor-poiter rounded-sm"
+                                >
+                                </Image>
+                            </Link>
 
                             <div className="flex hap-3.5">
                                 <Image
