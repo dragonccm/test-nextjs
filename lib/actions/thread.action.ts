@@ -16,7 +16,7 @@ interface Params {
 export async function createThread({ text, author, communityId, path }: Params) 
 {
   try {
-    connectToDB();
+    
 
 
     const createdThread = await Thread.create({
@@ -39,7 +39,7 @@ export async function createThread({ text, author, communityId, path }: Params)
 }
 
 export  async function fetchPost(pageNumber=1,pageSize=20) {
-  connectToDB();
+  
 
   const skipAmount=(pageNumber - 1) * pageSize
   const postsQuery = Thread.find({parentId: {$in:[null,undefined]}})
@@ -63,7 +63,7 @@ export  async function fetchPost(pageNumber=1,pageSize=20) {
 }
 
 export async function fetchThreadById(threadId: string) {
-  connectToDB();
+  
 
   try {
     const thread = await Thread.findById(threadId)
@@ -106,7 +106,7 @@ export async function addCommentToThread(
   userId: string,
   path: string
 ) {
-  connectToDB();
+  
 
   try {
 

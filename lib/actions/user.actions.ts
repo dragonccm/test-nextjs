@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache"
 
 export async function fetchUser(userId: string) {
   try {
-    connectToDB();
+   
     return await User.findOne({ id: userId })
     // .populate({
     //   path:'communities',
@@ -35,7 +35,7 @@ export async function updateUser({
   image,
 }: Params): Promise<void> {
   try {
-    connectToDB();
+   
 
     await User.findOneAndUpdate(
       { id: userId },
@@ -61,7 +61,7 @@ export async function updateUser({
 
 export async function fetchUserPosts(userId: string) {
   try {
-    connectToDB();
+   
     const threads = await User.findOne({ id: userId }).populate({
       path: "threads",
       model: Thread,
@@ -81,6 +81,40 @@ export async function fetchUserPosts(userId: string) {
   } catch (error) {
     console.error("Error fetching user threads:", error);
     throw error;
+  }
+}
+
+
+
+export async function updateUsers({
+  userId,
+  bio,
+  name,
+  path,
+  username,
+  image,
+}: Params): Promise<void> {
+  try {
+   
+
+    await User.findOneAndUpdate(
+      { id: userId },
+      {
+        username,
+        name,
+        bio,
+        image,
+        onboarded: true,
+      },
+      { upsert: true }
+    );
+
+    if (path === "/profile/edit") {
+      revalidatePath(path);
+    }
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Failed to create/update user: ${error.message}`);
   }
 }
 
