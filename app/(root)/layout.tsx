@@ -9,9 +9,10 @@ import "../globals.css";
 import Bottombar from "@/components/shared/Bottombar";
 
 import Topbar from "@/components/shared/Topbar";
-import LeftSidebar from "@/components/shared/Leftsidebar";
+
 import Rightsidebar from "@/components/shared/Rightsidebar";
 import { connectToDB } from "@/lib/mongoose";
+import Leftsidebar from "@/components/shared/LeftSidebar";
 connectToDB();
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +37,8 @@ export default function RootLayout({
           <Topbar />
 
           <main className='flex flex-row'>
-            <LeftSidebar />
+            
+            <Leftsidebar />
             <section className='main-container'>
               <div className='w-full max-w-4xl'>{children}</div>
             </section>
