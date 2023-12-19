@@ -10,6 +10,12 @@ const threadSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  like:  [
+    {
+      type: String,
+      ref: "Thread",
+    },
+  ],
   community: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Community",
