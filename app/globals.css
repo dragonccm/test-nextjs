@@ -159,3 +159,10 @@
 .comment-form_btn {
   @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
 }
+/* 
+.threadhidden :hover p{
+  max-height: fit-content !important;
+} */
+.Thread-form_image-label {
+  @apply flex items-center justify-center  bg-dark-4 !important;
+}

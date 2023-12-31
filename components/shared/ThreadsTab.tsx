@@ -29,6 +29,11 @@ interface Result {
         image: string;
       };
     }[];
+    like: {
+      author: {
+        image: string;
+      };
+    }[];
   }[];
 }
 
@@ -76,6 +81,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
           }
           createdAt={thread.createdAt}
           comments={thread.children}
+          totalLike={thread.like}
         />
       ))}
     </section>

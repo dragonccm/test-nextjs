@@ -55,9 +55,10 @@ interface Params {
   like: Array<string>,
   communityId: string | null,
   path: string,
+  image: string
 }
 
-export async function createThread({ text, author, like, communityId, path }: Params
+export async function createThread({ text, author, like, communityId, path, image }: Params
 ) {
   try {
 
@@ -72,9 +73,8 @@ export async function createThread({ text, author, like, communityId, path }: Pa
       author,
       like,
       community: communityIdObject,
+      image,
     });
-
-
 
     await User.findByIdAndUpdate(author, {
       $push: { threads: createdThread._id },
@@ -263,7 +263,7 @@ export async function addLikeToThread(
         console.log("XOÁ LIKE ĐƯỢC RỒI");
         likes.splice(index, 1);
       } else {
-        // Thêm ID mới vào mảng
+        console.log("LIKE ĐƯỢC RỒI");
         likes.push(userId);
       }
 
@@ -274,7 +274,7 @@ export async function addLikeToThread(
       if (!savedThread) {
         throw new Error("Unable to update like");
       } else {
-        console.log("LIKE ĐƯỢC RỒI");
+        console.log("");
       }
       let value = index == -1 ? true : false;
       return value

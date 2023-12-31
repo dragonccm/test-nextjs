@@ -5,6 +5,7 @@ import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import LikeThread from "../forms/LikeThread";
 
+
 interface Props {
   id: string;
   currentUserId: string;
@@ -26,8 +27,10 @@ interface Props {
       image: string;
     };
   }[];
+  totalLike:{}[];
   isComment?: boolean;
   isLike?: boolean;
+  img?: string;
 }
 
 function ThreadCard({
@@ -39,12 +42,15 @@ function ThreadCard({
   community,
   createdAt,
   comments,
+  totalLike,
   isComment,
-  isLike
+  isLike,
+  img
 }: Props) {
   return (
+
     <article
-      className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
+      className={`threadhidden flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
         }`}
     >
       <div className='flex items-start justify-between'>
@@ -68,26 +74,31 @@ function ThreadCard({
                 {author.name}
               </h4>
             </Link>
-
-            <p className='mt-2 text-small-regular text-light-2'>{content}</p>
-
+            <Link href={`/thread/${id}`}>
+              <p className='mt-2 text-small-regular text-light-2 text-ellipsis'>{content}</p>
+            </Link>
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
-              {/* <Link href={`/profile/${author.id}`} className="relative h-80 w-96">
+              {
+                img? (<div className="relative h-80 w-96">
                 <Image
-                  src={author.image}
+                  src={img}
                   alt="profile image"
                   fill
                   className="cursor-poiter rounded-sm"
                 >
                 </Image>
-              </Link> */}
-              <div className='flex gap-3.5'>
+              </div>):''
+              }
+              
+              <div className='flex gap-3.5 item-center'>
+
                 <LikeThread
                   threadId={JSON.stringify(id)}
                   userId={currentUserId}
-                  isComment={isComment}
+                  totalLike={totalLike}
                   isLike={isLike}
                 />
+
                 <Link href={`/thread/${id}`}>
                   <Image
                     src='/assets/reply.svg'
@@ -111,6 +122,7 @@ function ThreadCard({
                   height={24}
                   className='cursor-pointer object-contain'
                 />
+                
               </div>
 
               {isComment && comments.length > 0 && (
@@ -174,6 +186,7 @@ function ThreadCard({
         </Link>
       )}
     </article>
+
   );
 }
 

@@ -32,7 +32,11 @@ async function page({ params }: { params: { id: string } }) {
           community={thread.community}
           createdAt={thread.createdAt}
           comments={thread.children}
+          totalLike={thread.like}
+          isLike={thread.like.indexOf(user.id) == -1 ? true : false}
+          img={thread.image ? thread.image : ''}
         />
+     
       </div>
 
       <div className='mt-7'>
@@ -55,6 +59,7 @@ async function page({ params }: { params: { id: string } }) {
             community={childItem.community}
             createdAt={childItem.createdAt}
             comments={childItem.children}
+            totalLike={childItem.like}
             isComment
           />
         ))}
