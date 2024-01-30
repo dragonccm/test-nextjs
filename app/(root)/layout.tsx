@@ -12,7 +12,7 @@ import Topbar from "@/components/shared/Topbar";
 
 import Rightsidebar from "@/components/shared/RightSidebar";
 import { connectToDB } from "@/lib/mongoose";
-import Leftsidebar from "@/components/shared/LeftSidebar";
+import Leftsidebar from "@/components/shared/Leftsidebar";
 connectToDB();
 const inter = Inter({ subsets: ["latin"] });
 
