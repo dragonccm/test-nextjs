@@ -10,9 +10,9 @@ import Bottombar from "@/components/shared/Bottombar";
 
 import Topbar from "@/components/shared/Topbar";
 
-import Rightsidebar from "@/components/shared/RightSidebar";
+import RightSidebar from "@/components/shared/RightSidebar";
 import { connectToDB } from "@/lib/mongoose";
-import LeftSidebar from "@/components/shared/Leftsidebar";
+import LeftSidebar from "@/components/shared/LeftSidebar";
 connectToDB();
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,7 +43,7 @@ export default function RootLayout({
               <div className='w-full max-w-4xl'>{children}</div>
             </section>
             {}
-            <Rightsidebar />
+            <RightSidebar />
           </main>
 
           <Bottombar />
