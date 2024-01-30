@@ -19,10 +19,14 @@ function LikeThread({
     userId,
     isLike,
 }: Props) {
-    const [isLiked, setIsLiked] = useState<boolean | null>(null);
-    useEffect(() => {    
-      setIsLiked(isLike);
+  const [isLiked, setIsLiked] = useState<boolean | null>(false); // Hoặc null nếu thích hợp hơn
+
+    useEffect(() => {
+      if (isLike !== undefined) {
+        setIsLiked(isLike);
+      }
     }, [isLike]);
+    
     const handleLikeClick = async () => {
       setIsLiked((prevIsLiked) => {      
         const updatedIsLiked = !prevIsLiked;
