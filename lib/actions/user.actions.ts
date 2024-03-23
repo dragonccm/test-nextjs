@@ -156,8 +156,6 @@ export async function fetchUsers({
 export async function getActivity(userId: string) {
   try {
     
-
-    
     const userThreads = await Thread.find({ author: userId });
 
     
