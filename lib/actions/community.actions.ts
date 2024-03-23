@@ -271,9 +271,6 @@ export async function updateCommunityInfo(
 
 export async function deleteCommunity(communityId: string) {
   try {
-   
-
-    
     const deletedCommunity = await Community.findOneAndDelete({
       id: communityId,
     });

@@ -124,7 +124,7 @@ function PostThread({ userId }: Props) {
           control={form.control}
           name='profile_photo'
           render={({ field }) => (
-            <FormItem className='flex flex-col items-center gap-4'>
+            <FormItem className='flex flex-col items-center gap-4 rounded-2xl border-dashed border-2 border-sky-500 p-5'>
               <FormLabel className='Thread-form_image-label min-h-80 min-w-80'>
                 {field.value ? (
                   <Image
@@ -133,7 +133,7 @@ function PostThread({ userId }: Props) {
                     width={300}
                     height={300}
                     priority
-                    className='object-contain min-h-80 min-w-80'
+                    className='object-contain min-h-80 min-w-80 rounded-2xl hover:bg-sky-700'
                   />
                 ) : (
                   <Image
@@ -141,7 +141,7 @@ function PostThread({ userId }: Props) {
                     alt='profile_icon'
                     width={100}
                     height={100}
-                    className='object-contain min-h-80 min-w-80'
+                    className='object-contain min-h-80 min-w-80 rounded-2xl hover:bg-sky-700' 
                   />
                 )}
               </FormLabel>

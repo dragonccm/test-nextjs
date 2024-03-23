@@ -79,12 +79,12 @@ function ThreadCard({
             </Link>
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               {
-                img? (<div className="relative h-80 w-96">
+                img? (<div className="relative h-80 w-120 ">
                 <Image
                   src={img}
                   alt="profile image"
                   fill
-                  className="cursor-poiter rounded-sm"
+                  className="cursor-poiter size-full object-contain "
                 >
                 </Image>
               </div>):''

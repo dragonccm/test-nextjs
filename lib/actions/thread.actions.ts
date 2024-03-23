@@ -56,8 +56,6 @@ interface Params {
 export async function createThread({ text, author, like, communityId, path, image }: Params
 ) {
   try {
-
-
     const communityIdObject = await Community.findOne(
       { id: communityId },
       { _id: 1 }
@@ -239,8 +237,8 @@ export async function addCommentToThread(
 
 export async function addLikeToThread(
   threadId: string,
-  path: string,
   userId: string,
+  like: boolean,
 ) {
   try {
     const originalThread = await Thread.findById(threadId);
@@ -248,175 +246,32 @@ export async function addLikeToThread(
     if (!originalThread) {
       throw new Error("Thread not found");
     }
+    
+    const likes = originalThread.like || [];
 
-    if (originalThread.like !== undefined) {
-      const likes = originalThread.like;
-
-      // Kiểm tra xem có ID nào trùng với userId hay không
+    if (like) {
+      console.log("LIKE ĐƯỢC RỒI");
+      likes.push(userId);
+    } else {
+      console.log("XOÁ LIKE ĐƯỢC RỒI");
       const index = likes.indexOf(userId);
       if (index !== -1) {
-        console.log("XOÁ LIKE ĐƯỢC RỒI");
         likes.splice(index, 1);
-      } else {
-        console.log("LIKE ĐƯỢC RỒI");
-        likes.push(userId);
       }
-
-      // Lưu lại thread
-      originalThread.like = likes;
-      const savedThread = await originalThread.save();
-
-      if (!savedThread) {
-        throw new Error("Unable to update like");
-      } else {
-        console.log("");
-      }
-      let value = index == -1 ? true : false;
-      return value
-    } else {
-      console.log(originalThread + "nó đó");
     }
+
+    // Lưu lại thread
+    originalThread.like = likes;
+    const savedThread = await originalThread.save();
+
+    if (!savedThread) {
+      throw new Error("Unable to update like");
+    }
+
+    let value = like ? true : false;
+    return value;
   } catch (err) {
     console.error("Error while adding like:", err);
     throw new Error("Unable to add like");
   }
 }
-
-/*" use server"; 
-import { revalidatePath } from "next/cache"; 
-import User from "../models/user.model"; 
-import Thread from "../models/thread.model"; 
-import Community from "../models/community.model"; 
-
-export async function fetchPosts(pageNumber = 1, pageSize = 20) { 
-  const skipAmount = (pageNumber - 1) * pageSize; 
-  const posts = await Thread.find( { parentId: null }) 
-    .sort({ createdAt: -1 }) 
-    .skip(skipAmount) 
-    .limit(pageSize) 
-    .populate('author', 'name image _id') 
-    .populate('community', 'name image _id') 
-    .populate({ 
-      path: "children", 
-      populate: { path: "author", select: "name parentId image" }, 
-    }) 
-    .exec();
-
-  const totalPostsCount = await Thread.countDocuments({ parentId: null }); 
-  return { posts, isNext: totalPostsCount > pageNumber * pageSize }; 
-}
-
-export async function createThread({ text, author, like, communityId, path, image }) { 
-  try { 
-    const community = communityId ? await Community.findById(communityId, '_id') : null; 
-    const user = await User.findById(author);
-
-    if (!user) throw new Error("User not found");
-
-    const thread = await Thread.create({
-      text,
-      author,
-      like,
-      community,
-      image,
-    });
-
-    user.threads.push(thread._id);
-    await user.save();
-
-    if (community) {
-      community.threads.push(thread._id);
-      await community.save();
-    }
-
-    revalidatePath(path);
-    return thread;
-  } catch (error) {
-    throw new Error(`Failed to create thread: ${error.message}`);
-  }
-}
-
-async function fetchAllChildThreads(threadId, accumulator = []) {
-  const childThreads = await Thread.find({ parentId: threadId }, '_id');
-  for (const child of childThreads) {
-    accumulator.push(child);
-    await fetchAllChildThreads(child._id, accumulator);
-  }
-  return accumulator;
-}
-
-export async function deleteThread(id, path) {
-  try {
-    const threadToDelete = await Thread.findById(id);
-    if (!threadToDelete) throw new Error("Thread not found");
-
-    const descendantThreads = await fetchAllChildThreads(id);
-
-    const idsToDelete = descendantThreads.map(thread => thread._id);
-    idsToDelete.push(id);
-
-    await Promise.all([
-      Thread.deleteMany({ _id: { $in: idsToDelete } }),
-      User.updateMany({ threads: { $in: idsToDelete } }, { $pull: { threads: { $in: idsToDelete } } }),
-      Community.updateMany({ threads: { $in: idsToDelete } }, { $pull: { threads: { $in: idsToDelete } } })
-    ]);
-
-    revalidatePath(path);
-  } catch (error) {
-    throw new Error(`Failed to delete thread: ${error.message}`);
-  }
-}
-
-export async function fetchThreadById(threadId) {
-  try {
-    const thread = await Thread.findById(threadId)
-      .populate({ path: "author", select: 'name image' })
-      .populate({ path: "community", select: 'name image' })
-      .populate({ path: "children", populate: { path: "author", select: "name parentId image" } })
-      .exec();
-
-    return thread;
-  } catch (error) {
-    throw new Error(`Unable to fetch thread: ${error.message}`);
-  }
-}
-
-export async function addCommentToThread(threadId, commentText, userId, path) {
-  try {
-    const thread = await Thread.findById(threadId);
-    if (!thread) throw new Error("Thread not found");
-
-    const comment = await Thread.create({
-      text: commentText,
-      author: userId,
-      parentId: threadId
-    });
-
-    thread.children.push(comment._id);
-    await thread.save();
-
-    revalidatePath(path);
-    return comment;
-  } catch (error) {
-    throw new Error(`Unable to add comment: ${error.message}`);
-  }
-}
-
-export async function addLikeToThread(threadId, userId) {
-  try {
-    const thread = await Thread.findById(threadId);
-    if (!thread) throw new Error("Thread not found");
-
-    const index = thread.like.indexOf(userId);
-    if (index === -1) {
-      thread.like.push(userId);
-    } else {
-      thread.like.splice(index, 1);
-    }
-
-    await thread.save();
-    return index === -1;
-  } catch (error) {
-    throw new Error(`Unable to add like: ${error.message}`);
-  }
-}*/
