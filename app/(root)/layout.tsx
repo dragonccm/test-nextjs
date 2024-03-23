@@ -6,13 +6,14 @@ import { dark } from "@clerk/themes";
 
 import "../globals.css";
 
-import Bottombar from "@/components/shared/Bottombar";
 
-import Topbar from "@/components/shared/Topbar";
 
 import RightSidebar from "@/components/shared/RightSidebar";
 import { connectToDB } from "@/lib/mongoose";
 import LeftSidebar from "@/components/shared/LeftSidebar";
+import Topbar from "@/components/shared/Topbar";
+import Bottombar from "@/components/shared/Bottombar";
+
 
 connectToDB();
 const inter = Inter({ subsets: ["latin"] });
